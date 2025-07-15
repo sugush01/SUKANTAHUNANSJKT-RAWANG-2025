@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SUKAN TAHUNAN SJKT RAWANG 2025</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f9f9f9;
+    }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background: #fff;
+    }
+    th, td {
+      border: 1px solid #999;
+      padding: 10px;
+      text-align: center;
+    }
+    label, select, button {
+      margin: 5px;
+      padding: 6px;
+      font-size: 14px;
+    }
+    button {
+      cursor: pointer;
+    }
+    #printBtn {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+    }
+    #printBtn:hover {
+      background-color: #45a049;
+    }
+    #logo {
+      display: block;
+      margin: 0 auto 20px;
+      max-width: 200px;  /* Adjust the size of the logo */
+    }
+  </style>
+</head>
+<body>
+  <!-- Add the school logo image here -->
+  <img id="logo" src="/mnt/data/Untitled%20design%20(3).png" alt="School Logo">
+
+  <h1>🏁 SUKAN TAHUNAN SJKT RAWANG 2025</h1>
+
+  <div>
+    <label>Event:
+      <select id="event">
+        <option value="">-- Select --</option>
+        <option>60 M P 1 (7 TAHUN)</option>
+        <option>60 M L 1 (7 TAHUN)</option>
+        <option>60 M P 2 (8 TAHUN)</option>
+        <option>60 M L 2 (8 TAHUN)</option>
+        <option>70 M P 3 (9 TAHUN)</option>
+        <option>70 M L 3 (9 TAHUN)</option>
+        <option>100 M P 4 (AKHIR)</option>
+        <option>100 M L 4 (AKHIR)</option>
+        <option>100 M P 5 (AKHIR)</option>
+        <option>100 M L 5 (AKHIR)</option>
+        <option>100 M P 6 (AKHIR)</option>
+        <option>100 M L 6 (AKHIR)</option>
+        <option>4x100 M P 4 (AKHIR)</option>
+        <option>4x100 M L 4 (AKHIR)</option>
+        <option>4x100 M P 5 (AKHIR)</option>
+        <option>4x100 M L 5 (AKHIR)</option>
+        <option>4x100 M L 6 (AKHIR)</option>
+      </select>
+    </label>
+
+    <label>1st:
+      <select id="first">
+        <option value="">--</option>
+        <option value="MERAH">MERAH</option>
+        <option value="BIRU">BIRU</option>
+        <option value="KUNING">KUNING</option>
+        <option value="HIJAU">HIJAU</option>
+      </select>
+    </label>
+
+    <label>2nd:
+      <select id="second">
+        <option value="">--</option>
+        <option value="MERAH">MERAH</option>
+        <option value="BIRU">BIRU</option>
+        <option value="KUNING">KUNING</option>
+        <option value="HIJAU">HIJAU</option>
+      </select>
+    </label>
+
+    <label>3rd:
+      <select id="third">
+        <option value="">--</option>
+        <option value="MERAH">MERAH</option>
+        <option value="BIRU">BIRU</option>
+        <option value="KUNING">KUNING</option>
+        <option value="HIJAU">HIJAU</option>
+      </select>
+    </label>
+
+    <label>4th:
+      <select id="fourth">
+        <option value="">--</option>
+        <option value="MERAH">MERAH</option>
+        <option value="BIRU">BIRU</option>
+        <option value="KUNING">KUNING</option>
+        <option value="HIJAU">HIJAU</option>
+      </select>
+    </label>
+
+    <button onclick="addResult()">Add Result</button>
+    <button id="printBtn" onclick="window.print()">🖨️ Print</button>
+  </div>
+
+  <h2>📋 Event Results</h2>
+  <table id="resultsTable">
+    <thead>
+      <tr>
+        <th>Event</th>
+        <th>1st Place</th>
+        <th>2nd Place</th>
+        <th>3rd Place</th>
+        <th>4th Place</th>
+        <th>✅ Done</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <h2>🏆 House Leaderboard</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>House</th>
+        <th>Points</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>MERAH</td><td id="score-MERAH">0</td></tr>
+      <tr><td>BIRU</td><td id="score-BIRU">0</td></tr>
+      <tr><td>KUNING</td><td id="score-KUNING">0</td></tr>
+      <tr><td>HIJAU</td><td id="score-HIJAU">0</td></tr>
+    </tbody>
+  </table>
+
+  <script>
+    const scores = { MERAH: 0, BIRU: 0, KUNING: 0, HIJAU: 0 };
+
+    function addResult() {
+      const event = document.getElementById("event").value;
+      const first = document.getElementById("first").value;
+      const second = document.getElementById("second").value;
+      const third = document.getElementById("third").value;
+      const fourth = document.getElementById("fourth").value;
+
+      if (!event || !first || !second || !third || !fourth) {
+        alert("Please fill in all fields.");
+        return;
+      }
+
+      scores[first] += 20;
+      scores[second] += 15;
+      scores[third] += 10;
+      scores[fourth] += 5;
+
+      updateScores();
+
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${event}</td>
+        <td>${first}</td>
+        <td>${second}</td>
+        <td>${third}</td>
+        <td>${fourth}</td>
+        <td><input type="checkbox" /></td>
+      `;
+      document.querySelector("#resultsTable tbody").appendChild(row);
+
+      document.getElementById("event").value = "";
+      document.getElementById("first").value = "";
+      document.getElementById("second").value = "";
+      document.getElementById("third").value = "";
+      document.getElementById("fourth").value = "";
+    }
+
+    function updateScores() {
+      for (const house in scores) {
+        document.getElementById("score-" + house).textContent = scores[house];
+      }
+    }
+  </script>
+</body>
+</html>
